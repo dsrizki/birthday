@@ -5,6 +5,9 @@ No framework, no build step, no dependencies.
 
 ## How it works
 
+- The site opens with a **secret-code lock screen**: 8 digit boxes in `[][]/[][]/[][][][]`
+  (DD/MM/YYYY) format, numbers only. The code is set in `script.js` (`PASSWORD` constant).
+  Note: this is a playful client-side gate, not real security — the code is visible in the page source.
 - 10 questions, each with two options: **A** (soft orange) and **B** (light green).
 - Answer correctly → fun transition to the next question. 🎉
 - Answer wrong → **back to question 1!** 😅

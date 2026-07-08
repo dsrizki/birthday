@@ -42,8 +42,30 @@
 
     <main class="wrap">
 
+        <!-- ══════════ LOCK SCREEN (password gate) ══════════ -->
+        <section id="lock-screen" class="screen">
+            <div class="lock-emoji">🔒</div>
+            <h1 class="lock-title">Secret Code!</h1>
+            <p class="subtitle">Type the magic date to open the party door 🚪✨</p>
+
+            <div id="code-row" class="code-row">
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 1" />
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 2" />
+                <span class="slash" aria-hidden="true">/</span>
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 3" />
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 4" />
+                <span class="slash" aria-hidden="true">/</span>
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 5" />
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 6" />
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 7" />
+                <input class="digit" type="text" inputmode="numeric" autocomplete="off" maxlength="1" aria-label="Digit 8" />
+            </div>
+
+            <p id="lock-error" class="lock-error hidden">Oops! Wrong code — try again! 😅</p>
+        </section>
+
         <!-- ══════════ START SCREEN ══════════ -->
-        <section id="start-screen" class="screen">
+        <section id="start-screen" class="screen hidden">
             <h1 class="title">🎂 Birthday Quiz! 🎉</h1>
             <p class="subtitle">Answer all <strong>10 questions</strong> to join the party! 🥳</p>
             <p class="warning">⚠️ One wrong answer sends you back to the start!</p>
@@ -161,6 +183,8 @@
         </section>
 
     </main>
+
+    <footer class="made">🎂 Made with love · 8 July 2026</footer>
 
     <script src="questions.js"></script>
     <script src="script.js"></script>

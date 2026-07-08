@@ -17,7 +17,14 @@
 
     const CONFETTI_COLORS = ['#FF6B9D', '#FFD93D', '#6BCB77', '#4D96FF', '#FF9F45', '#C780FA'];
 
+    // access code, digits only, DD/MM/YYYY boxes: [][]/[][]/[][][][]
+    const PASSWORD = '09072000';
+
     const els = {
+        lockScreen: document.getElementById('lock-screen'),
+        codeRow: document.getElementById('code-row'),
+        digits: [...document.querySelectorAll('.digit')],
+        lockError: document.getElementById('lock-error'),
         startScreen: document.getElementById('start-screen'),
         quizScreen: document.getElementById('quiz-screen'),
         celebrationScreen: document.getElementById('celebration-screen'),
@@ -234,6 +241,90 @@
         els.startScreen.classList.remove('hidden');
     }
 
+    // ── password gate ────────────────────────────────────────
+    let lockBusy = false;
+
+    function clearCode(focusFirst) {
+        els.digits.forEach((d) => {
+            d.value = '';
+            d.classList.remove('filled');
+        });
+        if (focusFirst) els.digits[0].focus();
+    }
+
+    function unlock() {
+        playChime();
+        els.lockScreen.classList.add('hidden');
+        els.startScreen.classList.remove('hidden');
+        els.startScreen.classList.add('enter');
+        setTimeout(() => els.startScreen.classList.remove('enter'), 600);
+    }
+
+    function wrongCode() {
+        lockBusy = true;
+        playBuzz();
+        els.lockError.classList.remove('hidden');
+        els.codeRow.classList.add('shake');
+        setTimeout(() => {
+            els.codeRow.classList.remove('shake');
+            clearCode(true);
+            lockBusy = false;
+        }, 700);
+    }
+
+    function checkCode() {
+        const code = els.digits.map((d) => d.value).join('');
+        if (code.length < PASSWORD.length) return;
+        if (code === PASSWORD) {
+            unlock();
+        } else {
+            wrongCode();
+        }
+    }
+
+    els.digits.forEach((digit, i) => {
+        digit.addEventListener('input', () => {
+            if (lockBusy) {
+                digit.value = '';
+                return;
+            }
+            els.lockError.classList.add('hidden');
+            digit.value = digit.value.replace(/\D/g, '').slice(-1); // numbers only
+            digit.classList.toggle('filled', digit.value !== '');
+            if (digit.value && i < els.digits.length - 1) {
+                els.digits[i + 1].focus();
+            }
+            checkCode();
+        });
+
+        digit.addEventListener('keydown', (e) => {
+            if (e.key === 'Backspace' && !digit.value && i > 0) {
+                els.digits[i - 1].focus();
+                els.digits[i - 1].value = '';
+                els.digits[i - 1].classList.remove('filled');
+                e.preventDefault();
+            } else if (e.key === 'ArrowLeft' && i > 0) {
+                els.digits[i - 1].focus();
+            } else if (e.key === 'ArrowRight' && i < els.digits.length - 1) {
+                els.digits[i + 1].focus();
+            }
+        });
+    });
+
+    // paste the whole code at once (e.g. "09072000" or "09/07/2000")
+    els.codeRow.addEventListener('paste', (e) => {
+        e.preventDefault();
+        if (lockBusy) return;
+        const nums = (e.clipboardData.getData('text').match(/\d/g) || []).slice(0, els.digits.length);
+        clearCode(false);
+        nums.forEach((n, i) => {
+            els.digits[i].value = n;
+            els.digits[i].classList.add('filled');
+        });
+        els.digits[Math.min(nums.length, els.digits.length - 1)].focus();
+        checkCode();
+    });
+
     // ── wire up ──────────────────────────────────────────────
     els.startBtn.addEventListener('click', startQuiz);
     els.againBtn.addEventListener('click', backToStart);
@@ -242,4 +333,5 @@
 
     buildDots();
     render();
+    els.digits[0].focus();
 })();

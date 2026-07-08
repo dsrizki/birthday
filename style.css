@@ -120,6 +120,99 @@ body {
     display: none !important;
 }
 
+/* ── lock screen (password gate) ─────────────────────────── */
+.lock-emoji {
+    font-size: clamp(3rem, 12vw, 4.2rem);
+    animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+.lock-title {
+    margin-top: 6px;
+    font-size: clamp(1.9rem, 7.5vw, 3rem);
+    font-weight: 800;
+    text-shadow: 3px 3px 0 rgba(255, 255, 255, 0.8);
+}
+
+.code-row {
+    margin-top: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.code-row.shake {
+    animation: shake 0.55s ease-in-out;
+}
+
+.digit {
+    width: 46px;
+    height: 60px;
+    text-align: center;
+    font-family: inherit;
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--navy);
+    background: var(--white);
+    border: 4px solid var(--blue-border);
+    border-radius: 14px;
+    box-shadow: 0 5px 0 rgba(127, 184, 224, 0.45);
+    caret-color: var(--pink);
+    transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
+}
+
+.digit:focus {
+    outline: none;
+    border-color: var(--pink);
+    transform: scale(1.1);
+}
+
+.digit.filled {
+    background: #fff3c9;
+    border-color: var(--yellow);
+}
+
+.code-row.shake .digit {
+    border-color: #e05263;
+    background: #ffe3e3;
+}
+
+.slash {
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--navy);
+    opacity: 0.55;
+    margin: 0 2px;
+    user-select: none;
+}
+
+.lock-error {
+    margin-top: 16px;
+    font-size: clamp(0.95rem, 4vw, 1.15rem);
+    font-weight: 700;
+    color: #d64579;
+}
+
+/* generic screen entrance (lock → start unlock) */
+.screen.enter {
+    animation: springInRight 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── footer: site creation date ──────────────────────────── */
+.made {
+    position: fixed;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-family: inherit;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: rgba(44, 62, 102, 0.55);
+    z-index: 1;
+    pointer-events: none;
+}
+
 /* ── start screen ────────────────────────────────────────── */
 .title {
     font-size: clamp(2.1rem, 8vw, 3.4rem);
@@ -560,6 +653,40 @@ body {
 
     .character {
         width: min(70vw, 230px);
+    }
+
+    .code-row {
+        gap: 5px;
+    }
+
+    .digit {
+        width: 34px;
+        height: 48px;
+        font-size: 1.25rem;
+        border-radius: 11px;
+        border-width: 3px;
+    }
+
+    .slash {
+        font-size: 1.5rem;
+        margin: 0 1px;
+    }
+}
+
+@media (max-width: 360px) {
+    .code-row {
+        gap: 4px;
+    }
+
+    .digit {
+        width: 29px;
+        height: 42px;
+        font-size: 1.1rem;
+    }
+
+    .slash {
+        font-size: 1.3rem;
+        margin: 0;
     }
 }
 
