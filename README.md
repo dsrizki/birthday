@@ -35,8 +35,10 @@ python3 -m http.server 3000
 
 The celebration character's face is the image file [face.jpg](face.jpg) (a dummy smiley by
 default). Replace that file with **any picture** — keep the filename `face.jpg` — and it is
-automatically center-cropped into the circular face, with the party hat drawn on top.
-Square-ish photos with the face in the middle look best.
+automatically cropped into the circular face, with the party hat drawn on top.
+The crop is top-aligned (`preserveAspectRatio="xMidYMin slice"` in index.html), which suits
+portrait photos where the face sits in the upper part. Keep the image under ~1000px /
+a few hundred KB so the page stays fast on mobile.
 
 ## Edit the questions
 
