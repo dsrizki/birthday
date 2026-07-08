@@ -31,6 +31,13 @@ npx serve -l 3000 .
 python3 -m http.server 3000
 ```
 
+## Put your own photo on the character
+
+The celebration character's face is the image file [face.jpg](face.jpg) (a dummy smiley by
+default). Replace that file with **any picture** — keep the filename `face.jpg` — and it is
+automatically center-cropped into the circular face, with the party hat drawn on top.
+Square-ish photos with the face in the middle look best.
+
 ## Edit the questions
 
 All questions live in [questions.js](questions.js) — one array, each entry:
